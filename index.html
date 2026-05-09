@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadoo Travel - Lab 4</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Volkhov:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <header class="header container">
+        <div class="logo">
+            <img src="img/logo.png" alt="Jadoo">
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#news">Новини</a></li>
+                <li><a href="#hot-deals" class="hot-deals-link">Гарячі пропозиції</a></li>
+                <li><a href="#destinations">Тури</a></li>
+                <li><a href="#analytics">Аналітика</a></li>
+                <li class="search-box">
+                    <input type="text" id="main-search" placeholder="Пошук туру...">
+                </li>
+                <li class="cart-container">
+                    <button id="cart-btn">🛒 <span id="cart-count">0</span></button>
+                    <div id="cart-dropdown" class="cart-dropdown">
+                        <ul id="cart-items-list"></ul>
+                        
+                        <p id="empty-cart-msg" style="text-align: center; padding: 20px;">Кошик порожній</p>
+                        
+                        <div id="cart-footer">
+                            <p>Разом: <span>$<span id="cart-total-price">0</span></span></p>
+                            <button id="checkout-btn">Оформити замовлення</button>
+                        </div>
+                    </div>
+                </li>
+                <li><button class="login-btn" id="open-auth">Увійти</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero container">
+        <div class="hero-text">
+            <h1 class="hero-title">Найкращий досвід <span>подорожей</span></h1>
+            <p class="hero-subtitle">Кожна подорож - це можливість покинути повсякденність і зануритися у світ дива, розширюючи свої горизонти та набираючи незабутні враження.</p>
+        </div>
+        <div class="hero-image">
+            <img src="img/main.png" alt="Travel Experience">
+        </div>
+    </section>
+
+    <main>
+            <div class="container" id="news">
+                <h2>Останні новини</h2>
+                <div id="news-section-container" class="news-layout">
+                    <aside class="news-sidebar">
+                        <ul id="news-sidebar-list"></ul>
+                        <button id="load-more-news" class="submit-btn" style="margin-top: 15px; padding: 10px;">Більше новин</button>
+                    </aside>
+                    
+                    <main class="news-content-area">
+                        <div id="news-central-display">
+                            <p class="placeholder-text">Оберіть новину зліва, щоб прочитати деталі.</p>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </section>
+
+       <section id="hot-deals" class="container"> 
+    <h2 class="section-title">Гарячі пропозиції</h2> <div class="carousel-container">
+        <div class="carousel-track" id="hot-deals-track">
+            </div>
+        
+        <button class="carousel-btn prev" id="prev-deal">❮</button>
+        <button class="carousel-btn next" id="next-deal">❯</button>
+    </div>
+</section>
+
+        <section id="destinations" class="container">
+            <h2 class="section-title">Наші напрямки</h2>
+            <div class="filters-panel">
+                <div class="filter-buttons" id="filter-btns">
+                    <button class="filter-btn active" data-type="all">Усі</button>
+                    <button class="filter-btn" data-type="italy">Італія</button>
+                    <button class="filter-btn" data-type="uk">Англія</button>
+                    <button class="filter-btn" data-type="france">Франція</button>
+                    <button class="filter-btn" data-type="portugal">Португалія</button>
+                    <button class="filter-btn" data-type="iceland">Ісландія</button>
+                </div>
+                <div class="sort-controls">
+                    <select id="sort-select">
+                        <option value="name">За назвою</option>
+                        <option value="price-asc">Ціна (дешевше)</option>
+                        <option value="price-desc">Ціна (дорожче)</option>
+                    </select>
+                </div>
+            </div>
+            <div id="destinations-grid" class="destinations-grid"></div>
+        </section>
+
+        <section id="analytics" class="analytics container" style="margin-top: 100px; display: none;">
+            <h2 class="section-title">Аналітика популярності турів</h2>
+            
+            <div class="chart-controls" style="text-align: center; margin-bottom: 20px;">
+                <button class="submit-btn" style="width: auto; margin: 5px;" onclick="renderChart('bar')">Стовпчикова</button>
+                <button class="submit-btn" style="width: auto; margin: 5px;" onclick="renderChart('line')">Лінійна</button>
+                <button class="submit-btn" style="width: auto; margin: 5px;" onclick="renderChart('pie')">Кругова</button>
+            </div>
+        
+            <div style="max-width: 800px; margin: 0 auto;">
+                <canvas id="myChart"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h2 class="footer-logo">Ja<span>doo</span></h2>
+                <p>Ваш надійний провідник у світ незабутніх подорожей та нових відкриттів.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Компанія</h4>
+                <ul>
+                    <li><a href="#">Про нас</a></li>
+                    <li><a href="#">Кар'єра</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Контакти</h4>
+                <ul>
+                    <li><a href="#">Центр допомоги</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Наш офіс</h4>
+                <p>вул. Університетська, 28<br>Чернівці, Україна</p>
+                <p>Email: info@jadoo.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Jadoo. Всі права захищено.</p>
+        </div>
+    </footer>
+
+    <button id="backToTop" class="back-to-top">↑</button>
+
+    <div id="promo-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>🔥 Спеціальна пропозиція!</h3>
+            <p>Тільки сьогодні знижка 30% на всі перельоти в Європу!</p>
+            <button id="close-promo" disabled>Зачекайте... (<span id="promo-timer">5</span>)</button>
+        </div>
+    </div>
+
+    <div id="subscribe-banner" class="subscribe-banner" style="display:none;">
+        <p>Підпишіться на наші оновлення!</p>
+        <button id="sub-accept">Прийняти</button>
+        <button id="sub-reject">Відхилити</button>
+    </div>
+
+    <div id="loginModal" class="modal-overlay">
+        <div class="card-container">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="toggle-btns">
+                <button class="toggle-btn active" id="btn-login-tab">Вхід</button>
+                <button class="toggle-btn" id="btn-reg-tab">Реєстрація</button>
+            </div>
+            <h2 id="auth-title">Увійдіть в акаунт</h2>
+            <form id="login-form" class="auth-form">
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Пароль" required>
+                <span id="login-error" class="error-msg"></span>
+                <button type="submit" class="submit-btn">Увійдіть</button>
+            </form>
+            
+            <form id="register-form" class="auth-form" style="display: none;">
+                <input type="text" id="reg-name" placeholder="Ім'я" required>
+                <span id="reg-name-error" class="error-msg"></span>
+            
+                <input type="email" id="reg-email" placeholder="Email" required>
+                <span id="reg-email-error" class="error-msg"></span>
+            
+                <input type="password" id="reg-password" placeholder="Пароль" required>
+                <span id="reg-password-error" class="error-msg"></span>
+            
+                <input type="password" id="reg-confirm-password" placeholder="Повторіть пароль" required>
+                <span id="reg-confirm-error" class="error-msg"></span>
+            
+                <button type="submit" class="submit-btn">Зареєструватись</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/carousel.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

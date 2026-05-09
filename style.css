@@ -1,0 +1,832 @@
+/* ===== 1. ЗМІННІ ТА БАЗОВІ СТИЛІ ===== */
+:root {
+    --orange: #DF6951;
+    --dark: #181E4B;
+    --text: #5E6282;
+    --bg-light: #f9f9f9;
+    --white: #ffffff;
+    --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    margin: 0;
+    background: white; 
+    scroll-behavior: smooth;
+
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== 2. ХЕДЕР ТА НАВІГАЦІЯ ===== */
+.header {
+    position: relative;
+    z-index: 1001;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    background: transparent; 
+}
+
+.logo img {
+    height: 40px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 500;
+    font-size: 17px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--orange);
+}
+
+/* Пошук */
+.search-box {
+    margin: 0 15px;
+}
+
+.search-box input {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.search-box input:focus {
+    border-color: var(--orange);
+    width: 200px;
+}
+
+/* Кошик */
+.cart-container {
+    position: relative;
+}
+
+#cart-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#cart-btn:hover {
+    transform: scale(1.1);
+}
+
+#cart-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background: var(--orange);
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+/* Стиль для кнопки оформлення */
+#checkout-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #DF6951 0%, #fc8a71 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    margin-top: 15px;
+    border-radius: 8px;
+    font-family: 'Volkhov', serif;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(223, 105, 81, 0.3);
+}
+
+#checkout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(223, 105, 81, 0.4);
+    filter: brightness(1.1);
+}
+
+#checkout-btn:active {
+    transform: translateY(0);
+}
+
+/* Стиль для блоку з сумою, щоб кнопка не "злипалася" з ціною */
+#cart-footer {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    background-color: #fcfcfc;
+}
+
+#cart-footer p {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    color: #181E4B;
+    margin-bottom: 10px;
+}
+
+.cart-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background: var(--white);
+    padding: 20px;
+    width: 300px;
+    box-shadow: var(--shadow);
+    border-radius: 15px;
+    z-index: 1000;
+}
+
+.cart-dropdown.active {
+    display: block;
+}
+
+#cart-items-list {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    padding: 0;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-info {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.cart-item-info strong {
+    color: var(--dark);
+}
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.qty-btn {
+    background: #f0f0f0;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+    color: var(--dark);
+}
+
+.qty-btn:hover {
+    background: #ddd;
+}
+
+.qty {
+    font-weight: 600;
+    font-size: 14px;
+    min-width: 15px;
+    text-align: center;
+}
+
+.remove-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.remove-btn:hover {
+    background: #cc0000;
+}
+
+.cart-total {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--dark);
+    text-align: right;
+    margin-bottom: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #eee;
+}
+
+/* Авторизація */
+.login-btn {
+    background-color: var(--orange);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #c85a43;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(223, 105, 81, 0.3);
+}
+
+.error-msg {
+    color: #ff4d4d;
+    font-size: 12px;
+    margin-top: -8px;
+    margin-bottom: 10px;
+    display: none; 
+    text-align: left;
+    width: 100%;
+}
+
+input.invalid {
+    border: 1px solid #ff4d4d;
+}
+
+#login-error {
+    text-align: center;
+    font-weight: 500;
+}
+
+/* ===== 3. ГЕРОЙ-СЕКЦІЯ ===== */
+.hero {
+    display: flex;
+    align-items: stretch; 
+    justify-content: space-between;
+    gap: 0;
+    padding: 0; 
+    margin-top: 40px; 
+    position: relative; 
+    min-height: 80vh;
+    background: none; 
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%; 
+    height: 100%;
+    background-color: #fdf5e6; 
+    background-image: url('img/bg.svg'); 
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: -1;
+}
+
+.hero-text {
+    flex: 1.2;
+    padding: 80px 40px 80px 10%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+}
+
+.hero-title {
+    font-family: 'Volkhov', serif;
+    font-size: 4.5rem; 
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.1;
+    margin-bottom: 30px;
+}
+
+.hero-title span {
+    color: var(--orange);
+    position: relative;
+    display: inline-block;
+}
+
+.hero-title span::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background: rgba(223, 105, 81, 0.2);
+    z-index: -1;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem; 
+    color: var(--text);
+    margin-bottom: 30px;
+    max-width: 520px;
+    line-height: 1.7;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; 
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 650px;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0 0 0 100px; 
+    display: block;
+}
+
+
+/* ===== 4. НОВИНИ ===== */
+#news {
+    margin-top: 100px; 
+    padding-top: 20px;
+}
+
+.news-layout {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    align-items: flex-start;
+}
+
+.news-sidebar {
+    width: 35%;
+    background: var(--bg-light);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#news-sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-news-item {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: 0.3s;
+    color: var(--dark);
+}
+
+.sidebar-news-item.status-very-important { border-left: 4px solid #ff4d4d; }
+.sidebar-news-item.status-important { border-left: 4px solid var(--orange); }
+.sidebar-news-item.status-normal { border-left: 4px solid #4CAF50; }
+
+.sidebar-news-item:hover, .active-news {
+    background: white;
+    border-radius: 0 8px 8px 0;
+    box-shadow: var(--shadow);
+}
+
+.news-title {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.news-datetime {
+    font-size: 12px;
+    color: #888;
+    font-weight: normal; 
+}
+
+.news-content-area {
+    width: 65%;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    min-height: 300px;
+}
+
+@media (max-width: 768px) {
+    .news-layout {
+        flex-direction: column;
+    }
+    .news-sidebar, .news-content-area {
+        width: 100%;
+    }
+}
+
+/* ===== 5. ГАРЯЧІ ПРОПОЗИЦІЇ (КАРУСЕЛЬ) ===== */
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    margin: 20px auto; 
+    overflow: hidden;
+    border-radius: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    background: #000; 
+}
+
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hot-deal-slide {
+    min-width: 100%;
+    height: 500px; 
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hot-deal-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; 
+}
+
+.hot-deal-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 50px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    transition: 0.3s;
+    z-index: 10;
+}
+
+.carousel-btn:hover {
+    background: var(--orange);
+}
+
+.carousel-btn.prev { left: 20px; }
+.carousel-btn.next { right: 20px; }
+
+/* ===== 6. ФІЛЬТРИ ТА СОРТУВАННЯ ===== */
+.filters-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 15px;
+}
+
+.filter-btn {
+    padding: 10px 25px;
+    border: none;
+    background: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-right: 10px;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.filter-btn.active {
+    background: var(--orange);
+    color: white;
+}
+
+#sort-select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+/* ===== 7. НАПРЯМКИ (СІТКА КАРТОК) ===== */
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    padding-bottom: 60px;
+}
+
+.destination-card {
+    background: var(--white);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.4s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.destination-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.destination-card img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+
+.card-info {
+    padding: 25px;
+}
+
+.card-info h4 {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.card-desc-full {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    margin-top: 0;
+    border-top: 1px solid #eee;
+    padding-top: 0;
+}
+
+.destination-card:hover .card-desc-full {
+    max-height: 500px;
+    opacity: 1;
+    margin-top: 15px;
+    padding-top: 15px;
+}
+
+.add-to-cart {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: var(--dark);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-to-cart:hover {
+    background: var(--orange);
+}
+
+/* ===== 8. МОДАЛЬНІ ВІКНА ТА АВТОРИЗАЦІЯ ===== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(24, 30, 75, 0.4); 
+    backdrop-filter: blur(8px); 
+    z-index: 3000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    text-align: center;
+    max-width: 500px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--orange); 
+}
+
+.modal-content h3 {
+    font-family: 'Volkhov', serif;
+    font-size: 28px;
+    color: var(--dark);
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 25px;
+}
+
+#close-promo {
+    background-color: var(--orange);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#close-promo:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.card-container {
+    background: white;
+    padding: 40px;
+    border-radius: 25px;
+    width: 100%;
+    max-width: 400px; 
+    position: relative;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #999;
+}
+
+.toggle-btns {
+    display: flex;
+    margin-bottom: 30px;
+    background: #f0f0f0;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.toggle-btn.active {
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.auth-form input {
+    width: 100%; 
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: inherit;
+    outline: none;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background: #c85a43;
+}
+
+/* ===== 9. КНОПКА ВГОРУ ТА ФУТЕР ===== */
+.back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 10px 20px rgba(223, 105, 81, 0.4);
+}
+
+.site-footer {
+    background: #F9F9FB;
+    padding: 100px 0 50px;
+    margin-top: 100px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 50px;
+}
+
+.footer-logo span {
+    color: var(--orange);
+}
+
+.footer-links h4, .footer-contact h4 {
+    color: #080809;
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: var(--text);
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--orange);
+}
+
+.footer-bottom {
+    text-align: center; 
+    padding-top: 50px;  
+    border-top: 1px solid #EAEAEA; 
+    margin-top: 50px;
+    color: var(--text);
+    font-size: 14px;
+}
+
